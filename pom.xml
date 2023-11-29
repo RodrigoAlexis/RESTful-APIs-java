@@ -9,8 +9,8 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.productos</groupId>
-	<artifactId>demo</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<artifactId>ApiRestfulProductos</artifactId>
+	<version>0.0.1</version>
 	<name>demo</name>
 	<description>Api RESTful Productos</description>
 	<properties>
