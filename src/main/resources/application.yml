@@ -1,0 +1,26 @@
+server:
+  address: localhost
+  port: 8080
+
+  error:
+    include-message: always
+    include-binding-errors: always
+    include-exception: false
+
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/Pruebas
+    driver-class-name: org.postgresql.Driver
+    username: postgres
+    password: admin
+    tomcat:
+      connection-properties: useUnicode=true;characterEncoding=utf-8;
+  security:
+    user:
+      name: user
+      password: admin
+  main:
+    banner-mode: off
+
+
+  

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+    <!-- Configuración para la consola -->
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>
+                %black(%d{HH:mm:ss.SSS})  %yellow([%thread]) %highlight(%-5level) %gray(%logger{36}) - %white(%msg%n)
+            </pattern>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>INFO</level>
+        </filter>
+    </appender>
+
+   <!-- Configuración para el apéndice de archivo para TRACE y DEBUG -->
+    <appender name="FILE_TRACE_DEBUG" class="ch.qos.logback.core.FileAppender">
+        <file>logs/trace_debug.log</file> 
+        <append>true</append>
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>TRACE</level>
+        </filter>
+    </appender>
+
+    <!-- Configuración de root -->
+    <root level="TRACE">
+        <appender-ref ref="CONSOLE" />
+        <appender-ref ref="FILE_TRACE_DEBUG" />
+    </root>
+</configuration>
