@@ -51,16 +51,18 @@ public class ProductoController {
         if(!validaPeticion(product)){
             logger.error("Producto invalido", new Exception("El objeto recibido no corresponde a un producto valido"));
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, MESSAGE_BAD_REQUEST);
+        }else{
+            return  ResponseEntity.ok(productosService.addProduct(product));
         }
-        return  ResponseEntity.ok(productosService.addProduct(product));
     }
 
     @PutMapping(value = "productos/{id:[\\d]+}")
     public  ResponseEntity<Object> updateProduct(@PathVariable Long id, @RequestBody ProductosDTO product){
-        if (!this.validaPeticion(product)) {
+        if (!validaPeticion(product)) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, MESSAGE_BAD_REQUEST);
+        }else{
+            return ResponseEntity.ok(productosService.updateProduct(id, product));
         }
-        return ResponseEntity.ok(productosService.updateProduct(id, product));
     }
 
     @DeleteMapping(value = "productos/{id:[\\d]+}")

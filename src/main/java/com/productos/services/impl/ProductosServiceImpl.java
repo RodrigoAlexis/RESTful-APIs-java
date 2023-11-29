@@ -55,10 +55,10 @@ public class ProductosServiceImpl implements ProductosService {
 
         if (product.getNombre() == null || product.getPrecio() == null) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, MESSAGE_BAD_REQUEST);
+        }else{
+            final Productos productos = ProductosMapper.mapProductosDTO(product);
+            return ProductosMapper.mapProductos(this.repository.save(productos));
         }
-        
-        final Productos productos = ProductosMapper.mapProductosDTO(product);
-        return ProductosMapper.mapProductos(this.repository.save(productos));
     }
 
     @Override
@@ -70,13 +70,18 @@ public class ProductosServiceImpl implements ProductosService {
 
                 if (product.getNombre() == null || product.getPrecio() == null) {
                     throw new ResponseStatusException(HttpStatus.BAD_REQUEST, MESSAGE_BAD_REQUEST);
+                }else{
+                    BeanUtils.copyProperties(product, productoActual, "id");
+                    Productos productoActualizado = this.repository.save(productoActual);
+                    return ProductosMapper.mapProductos(productoActualizado);
                 }
-                BeanUtils.copyProperties(product, productoActual, "id");
-                Productos productoActualizado = this.repository.save(productoActual);
-                return ProductosMapper.mapProductos(productoActualizado);
+                
             })
-        .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, MESSAGE_NOT_FOUND));
-    }
+            .orElseThrow(() -> {
+                logger.error("Error: Producto no encontrado.");
+                return new ResponseStatusException(HttpStatus.NOT_FOUND, MESSAGE_NOT_FOUND);
+            });
+        }
 
     @Override
     public ProductosDTO deleteProduct(Long id) {
@@ -87,6 +92,9 @@ public class ProductosServiceImpl implements ProductosService {
                 repository.delete(producto);
                 return ProductosMapper.mapProductos(producto);
             })
-            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, MESSAGE_NOT_FOUND));
+            .orElseThrow(() -> {
+                logger.error("Error: Producto no encontrado.");
+                return new ResponseStatusException(HttpStatus.NOT_FOUND, MESSAGE_NOT_FOUND);
+            });
     }
 }
