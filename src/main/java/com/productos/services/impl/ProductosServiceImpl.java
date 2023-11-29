@@ -49,6 +49,11 @@ public class ProductosServiceImpl implements ProductosService {
     public ProductosDTO addProduct(ProductosDTO product) {
         logger.info("Entro metodo addProduct");
 
+        // Validar campos que no pueden ser nulos
+        if (product.getNombre() == null || product.getPrecio() == null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Nombre y precio son campos obligatorios.");
+        }
+
         final Productos productos = ProductosMapper.mapProductosDTO(product);
         return ProductosMapper.mapProductos(this.repository.save(productos));
     }
@@ -60,6 +65,11 @@ public class ProductosServiceImpl implements ProductosService {
     return this.repository.findById(id)
         .map( productoActual -> {
             BeanUtils.copyProperties(product, productoActual, "id");
+
+            if (product.getNombre() == null || product.getPrecio() == null) {
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Nombre y precio son campos obligatorios.");
+            }
+
             Productos productoActualizado = this.repository.save(productoActual);
             return ProductosMapper.mapProductos(productoActualizado);
         })

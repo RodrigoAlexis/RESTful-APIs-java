@@ -2,7 +2,6 @@ package com.productos.dto;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
 
 import java.math.BigDecimal;
 
@@ -13,7 +12,7 @@ class ProductosDTOTest {
     ProductosDTO productosDTO = new ProductosDTO();
 
     @Test
-    void construirProductosDTO() {
+    void buildProductosDTO() {
         Long idProducto = 1L;
         String nombre = "Producto de prueba";
         String descripcion = "Descripción del producto";
@@ -36,7 +35,7 @@ class ProductosDTOTest {
     } 
 
     @Test
-    void compararIgualdadProductosDTO() {
+    void compareEqualityProductsDTO() {
         ProductosDTO productosDTO1 = new ProductosDTO();
         productosDTO1.setIdProducto(1L);
         productosDTO1.setNombre("Producto A");
@@ -49,7 +48,7 @@ class ProductosDTOTest {
     }
 
     @Test
-    void compararDesigualdadProductosDTO() {
+    void compareInequalityProductsDTO() {
         ProductosDTO productosDTO1 = new ProductosDTO();
         productosDTO1.setIdProducto(1L);
         productosDTO1.setNombre("Producto A");

@@ -39,6 +39,6 @@ public class Productos {
     private BigDecimal precio;
 
     @Basic(optional = false)
-    @Column(name = "stock")
+    @Column(name = "stock", columnDefinition = "int default 0")
     private int stock;
 }

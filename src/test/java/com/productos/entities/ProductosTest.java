@@ -3,7 +3,6 @@ package com.productos.entities;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.math.BigDecimal;
@@ -33,7 +32,7 @@ class ProductosTest {
     }
 
     @Test
-    void validarRestriccionesDeColumna() {
+    void validateColumnConstraints() {
         producto.setIdproducto(1L);
         producto.setNombre("Nombre del producto");
         producto.setDescripcion(null);
@@ -51,7 +50,7 @@ class ProductosTest {
 
     //Revisar valores nulos
     // @Test
-    // void validarValoresNoNulos() {
+    // void validateNonNullValues() {
 
     //     // Intentar establecer un nombre nulo debería arrojar una excepción
     //     assertThrows(IllegalArgumentException.class, () -> producto.setNombre(null));
