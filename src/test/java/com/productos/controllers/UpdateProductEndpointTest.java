@@ -29,14 +29,13 @@ class UpdateProductEndpointTest {
     @InjectMocks
     private ProductoController productoController;
 
-    @Test
     void testUpdateProductSuccess() {
         when(productosService.updateProduct(Mockito.anyLong(), Mockito.any())).thenReturn(new ProductosDTO());
-
+    
         ResponseEntity<Object> response = productoController.updateProduct(1L, new ProductosDTO());
-
+    
         assertEquals(HttpStatus.OK, response.getStatusCode());
-
+    
         assertNotNull(response.getBody());
     }
 }

@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -76,16 +77,19 @@ class UpdateProductTest {
     }
     
     @Test
-    void testUpdateProductWithNullFields(){
+    void testUpdateProductWithNullFields() {
+
+        Productos productoExistente = new Productos();
+        when(repository.findById(anyLong())).thenReturn(java.util.Optional.of(productoExistente));
+
         ProductosDTO productDTO = new ProductosDTO();
         productDTO.setNombre(null);
         productDTO.setPrecio(null);
 
         ResponseStatusException exception = assertThrows(ResponseStatusException.class,
-                () -> productosService.addProduct(productDTO));
+                () -> productosService.updateProduct(1L, productDTO));
 
         assertEquals(HttpStatus.BAD_REQUEST, exception.getStatusCode());
-
         assertEquals("Nombre y precio son campos obligatorios.", exception.getReason());
 
         verify(repository, never()).save(any(Productos.class));

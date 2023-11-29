@@ -65,8 +65,8 @@ class AddProductTest {
         ResponseStatusException exception = assertThrows(ResponseStatusException.class,
                 () -> productosService.addProduct(productDTO));
 
-        assertEquals(HttpStatus.BAD_REQUEST, exception.getStatusCode());
-        assertEquals("Nombre y precio son campos obligatorios.", exception.getReason());
+                assertEquals(HttpStatus.BAD_REQUEST, exception.getStatusCode());
+                assertEquals("Nombre y precio son campos obligatorios.", exception.getReason());
 
         verify(repository, never()).save(any(Productos.class));
     }

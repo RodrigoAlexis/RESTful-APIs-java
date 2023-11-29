@@ -25,6 +25,10 @@ public class ProductosServiceImpl implements ProductosService {
     private ProductosRepository repository;
 
     private static final Logger logger = LoggerFactory.getLogger(ProductosServiceImpl.class);
+    private static final String MESSAGE_NOT_FOUND = "Producto no existente.";
+    private static final String MESSAGE_BAD_REQUEST = "Nombre y precio son campos obligatorios.";
+
+
 
     @Override
     public List<ProductosDTO> getProducts() {
@@ -41,7 +45,7 @@ public class ProductosServiceImpl implements ProductosService {
         logger.info("Entro metodo getProduct");
 
         Productos productos = repository.findById(id)
-        .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, MESSAGE_NOT_FOUND));
         return ProductosMapper.mapProductos(productos);
     }
 
@@ -49,11 +53,10 @@ public class ProductosServiceImpl implements ProductosService {
     public ProductosDTO addProduct(ProductosDTO product) {
         logger.info("Entro metodo addProduct");
 
-        // Validar campos que no pueden ser nulos
         if (product.getNombre() == null || product.getPrecio() == null) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Nombre y precio son campos obligatorios.");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, MESSAGE_BAD_REQUEST);
         }
-
+        
         final Productos productos = ProductosMapper.mapProductosDTO(product);
         return ProductosMapper.mapProductos(this.repository.save(productos));
     }
@@ -62,18 +65,17 @@ public class ProductosServiceImpl implements ProductosService {
     public ProductosDTO updateProduct(Long id, ProductosDTO product) {
         logger.info("Entro metodo updateProduct");
 
-    return this.repository.findById(id)
-        .map( productoActual -> {
-            BeanUtils.copyProperties(product, productoActual, "id");
+        return this.repository.findById(id)
+            .map( productoActual -> {
 
-            if (product.getNombre() == null || product.getPrecio() == null) {
-                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Nombre y precio son campos obligatorios.");
-            }
-
-            Productos productoActualizado = this.repository.save(productoActual);
-            return ProductosMapper.mapProductos(productoActualizado);
-        })
-       .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+                if (product.getNombre() == null || product.getPrecio() == null) {
+                    throw new ResponseStatusException(HttpStatus.BAD_REQUEST, MESSAGE_BAD_REQUEST);
+                }
+                BeanUtils.copyProperties(product, productoActual, "id");
+                Productos productoActualizado = this.repository.save(productoActual);
+                return ProductosMapper.mapProductos(productoActualizado);
+            })
+        .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, MESSAGE_NOT_FOUND));
     }
 
     @Override
@@ -85,6 +87,6 @@ public class ProductosServiceImpl implements ProductosService {
                 repository.delete(producto);
                 return ProductosMapper.mapProductos(producto);
             })
-            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, MESSAGE_NOT_FOUND));
     }
 }
