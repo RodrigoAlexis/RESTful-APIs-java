@@ -13,7 +13,7 @@
         </filter>
     </appender>
 
-   <!-- Configuración para el apéndice de archivo para TRACE y DEBUG -->
+   <!-- Configuración del archivo para TRACE y DEBUG -->
     <appender name="FILE_TRACE_DEBUG" class="ch.qos.logback.core.FileAppender">
         <file>logs/trace_debug.log</file> 
         <append>true</append>

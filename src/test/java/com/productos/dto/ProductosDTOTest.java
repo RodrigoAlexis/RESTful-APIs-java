@@ -26,7 +26,7 @@ class ProductosDTOTest {
         productosDTO.setPrecio(precio);
         productosDTO.setStock(stock);
 
-        // Verificar que los valores se hayan establecido correctamente
+        // Verifica que los valores se hayan establecido correctamente
         assertEquals(idProducto, productosDTO.getIdProducto());
         assertEquals(nombre, productosDTO.getNombre());
         assertEquals(descripcion, productosDTO.getDescripcion());

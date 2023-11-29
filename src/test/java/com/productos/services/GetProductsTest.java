@@ -35,10 +35,10 @@ class GetProductsTest {
 
         List<ProductosDTO> result = productosService.getProducts();
 
-        // Verificar resultado
+        // Verifica el resultado
         assertEquals(2, result.size());
 
-        // Verificar que se llamó al método findAll() del repositorio
+        // Verifica que se llamó al método findAll() del repositorio
         verify(repository, times(1)).findAll();
     }
 
